@@ -368,7 +368,7 @@ This project demonstrates:
 
 ### 1. Docker compose excution in ec2
 ![Application UI](https://github.com/user-attachments/assets/ca44f916-92a4-4848-adce-b5ba18911080)
-![Application UI](https://github.com/user-attachments/assets/75a1f04c-f929-4220-ac9a-5f966ef13fa0)
+![Application UI](https://github.com/user-attachments/assets/27df562c-39c6-4a3c-a0ab-aaa2b06e9e32)
 
 ---
 ### 1. Docker containers up and running
@@ -405,7 +405,8 @@ This project demonstrates:
 ![EC2 Containers](https://github.com/user-attachments/assets/c04be741-426a-409f-9de2-fa8d166026ff)
 
 ---
-<img width="1285" height="235" alt="image" src="https://github.com/user-attachments/assets/874a4abb-e1d8-4902-b783-dfba37486343" />
+
+
 
 
 
