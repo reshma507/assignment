@@ -252,17 +252,103 @@ http://54.234.207.127
 
 ---
 
-## Screenshots Required
+  ## 🖥️ EC2 Setup & Installations
 
-- GitHub repository  
-- Docker images  
-- Jenkins build  
-- Jenkins credentials  
-- Docker Hub push logs  
-- EC2 running containers  
-- Browser UI working  
-- docker-compose logs  
-- Nginx configuration  
+Below are the full installation steps performed on the AWS EC2 Ubuntu 22.04/24.04 instance for setting up:
+
+Docker
+
+Docker Compose
+
+Jenkins
+
+Required permissions
+
+Use these steps directly in your README.md.
+
+## 🐳 Install Docker on EC2
+Update system
+sudo apt update
+
+Install Docker Engine
+sudo apt install -y docker.io
+
+Enable & start Docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+Add ubuntu user to Docker group
+
+(Allows Docker commands without sudo)
+
+sudo usermod -aG docker ubuntu
+
+Apply changes
+newgrp docker
+
+## 🐳 Install Docker Compose
+Download Docker Compose binary
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+Give executable permissions
+sudo chmod +x /usr/local/bin/docker-compose
+
+Verify installation
+docker-compose --version
+
+## ⚙️ Install Jenkins on EC2
+Install Java (required for Jenkins)
+sudo apt update
+sudo apt install -y openjdk-17-jre
+
+Add Jenkins repository key
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+Add Jenkins repository
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+Install Jenkins
+sudo apt update
+sudo apt install -y jenkins
+
+Start Jenkins
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+Check Jenkins status
+systemctl status jenkins
+
+##  Allow Jenkins to Use Docker (Required for CI/CD)
+Add Jenkins user to Docker group
+sudo usermod -aG docker jenkins
+
+Restart Jenkins service
+sudo systemctl restart jenkins
+
+Verify Jenkins can run Docker
+
+Switch to Jenkins user:
+
+sudo su - jenkins
+docker ps
+
+
+If it runs without permission error → ✔ Success
+
+##  Open Required Ports in EC2 Security Group
+Port	Purpose
+22	SSH
+80	Nginx / Frontend
+8080	Jenkins
+27017	MongoDB (optional)
+3000 / custom	Backend if needed
+##  Clone Repo & Deploy Using Docker Compose
+git clone https://github.com/reshma507/assignment.git
+cd assignment
+docker-compose up -d --build
 
 ---
 
