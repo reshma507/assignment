@@ -256,3 +256,26 @@ http://EC2-PUBLIC-IP
 <img width="1919" height="1079" alt="Screenshot 2025-11-28 171125" src="https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9" />
 
 
+
+<img width="1709" height="807" alt="Screenshot 2025-11-28 165344" src="https://github.com/user-attachments/assets/af6985b9-a7a4-4e1e-8757-6fde802f51c4" />
+
+
+
+<img width="1827" height="819" alt="Screenshot 2025-11-28 163651" src="https://github.com/user-attachments/assets/08307b4f-6045-4afe-bd00-ab5ac57a9477" />
+
+
+<img width="1440" height="270" alt="Screenshot 2025-11-28 150617" src="https://github.com/user-attachments/assets/d979649b-d971-4cb4-a3bb-00278ee3fa80" />
+
+<img width="1145" height="285" alt="Screenshot 2025-11-27 232941" src="https://github.com/user-attachments/assets/72ac4576-4f21-40ca-b870-d99f7edea287" />
+
+
+
+<img width="1639" height="592" alt="Screenshot 2025-11-27 232900" src="https://github.com/user-attachments/assets/87aa9843-46fe-4fbe-bd2a-e71c134527b1" />
+
+
+
+
+
+
+
+
