@@ -29,29 +29,30 @@ Navigate to `http://localhost:8081/`
 
 
 
-MEAN Stack CRUD Application – DevOps Assignment
+# MEAN Stack CRUD Application – DevOps Assignment
 
-This project is a full-stack MEAN (MongoDB, Express, Angular, Node.js) CRUD application that has been fully containerized, deployed on an AWS EC2 instance, and automated using a CI/CD pipeline in Jenkins.
-The assignment includes Dockerization of frontend & backend, Docker Compose orchestration, MongoDB setup, Nginx reverse proxy, and continuous deployment.
+This repository contains a fully containerized MEAN (MongoDB, Express, Angular, Node.js) CRUD application deployed on AWS EC2 using Docker, Docker Compose, Jenkins CI/CD, and Nginx reverse proxy.
 
-📁 Project Structure
-.
-├── backend/
-│   ├── Dockerfile
-│   ├── package.json
-│   └── src/...
-├── frontend/
-│   ├── Dockerfile
-│   ├── package.json
-│   └── src/...
-├── docker-compose.yml
-├── nginx/
-│   └── default.conf
-├── Jenkinsfile
-└── README.md
+---
 
-🐳 Dockerization
-▶️ Backend Dockerfile
+## Project Structure
+
+```
+backend/
+frontend/
+docker-compose.yml
+nginx/default.conf
+Jenkinsfile
+README.md
+```
+
+---
+
+## Dockerfiles
+
+### Backend Dockerfile
+
+```
 FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
@@ -59,9 +60,11 @@ RUN npm install
 COPY . .
 EXPOSE 8080
 CMD ["npm", "start"]
+```
 
-▶️ Frontend Dockerfile
-# Stage 1 – Build Angular App
+### Frontend Dockerfile
+
+```
 FROM node:18-alpine as build
 WORKDIR /app
 COPY package*.json ./
@@ -69,16 +72,17 @@ RUN npm install
 COPY . .
 RUN npm run build --prod
 
-# Stage 2 – Serve with Nginx
 FROM nginx:alpine
 COPY --from=build /app/dist/angular-15-crud /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+```
 
-🧩 Docker Compose Setup
+---
 
-This docker-compose.yml orchestrates MongoDB, Backend, and Frontend.
+## Docker Compose File
 
+```
 version: "3.9"
 
 services:
@@ -125,23 +129,13 @@ networks:
 
 volumes:
   mongo-data:
+```
 
-🛢 MongoDB Setup
+---
 
-MongoDB is deployed using the official Docker image inside Docker Compose.
+## Nginx Reverse Proxy (nginx/default.conf)
 
-✔ No manual installation needed
-✔ Automatically persists data using named volume mongo-data
-
-🌐 Nginx Reverse Proxy Setup
-
-Nginx listens on port 80 and forwards routes:
-
-/api/* → backend (port 8080)
-
-/ → frontend Angular application
-
-nginx/default.conf
+```
 server {
     listen 80;
 
@@ -154,19 +148,13 @@ server {
         index index.html;
     }
 }
+```
 
-🔄 CI/CD Pipeline (Jenkins)
-Pipeline Features:
+---
 
-✔ Builds backend & frontend Docker images
-✔ Tags them with Git commit SHA
-✔ Logs into Docker Hub
-✔ Pushes updated images
-✔ SSH into EC2 instance
-✔ Pulls new images & restarts Docker Compose
-✔ Cleans unused images to save space
+## CI/CD – Jenkins Pipeline
 
-Jenkinsfile
+```
 pipeline {
     agent any
 
@@ -220,7 +208,7 @@ pipeline {
             steps {
                 sshagent(['ec2-ssh']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@54.175.60.36 << 'ENDSSH'
+                    ssh -o StrictHostKeyChecking=no ubuntu@54.234.207.127 << 'ENDSSH'
                         cd /home/ubuntu/assignment
 
                         docker pull ${DOCKERHUB_REPO}/assignment_backend:${IMAGE_TAG}
@@ -237,38 +225,81 @@ pipeline {
         }
     }
 }
+```
 
-☁️ AWS EC2 Deployment
+---
 
-The app runs on:
+## How to Run Locally
 
-Ubuntu 22.04
+```
+git clone https://github.com/reshma507/assignment.git
+cd assignment
+docker-compose up --build
+```
 
-Docker + Docker Compose
+Frontend → http://localhost  
+Backend → http://localhost:8080/api  
+MongoDB → localhost:27017  
 
-Nginx reverse proxy
+---
 
-Jenkins (external server)
+## Deployment
 
-Access the application using:
+The application is deployed on AWS EC2.
 
-http://EC2-PUBLIC-IP
-<img width="1919" height="1079" alt="Screenshot 2025-11-28 171125" src="https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9" />
+Public IP:  
+http://54.234.207.127
 
+---
 
+## Screenshots Required
 
+- GitHub repository  
+- Docker images  
+- Jenkins build  
+- Jenkins credentials  
+- Docker Hub push logs  
+- EC2 running containers  
+- Browser UI working  
+- docker-compose logs  
+- Nginx configuration  
 
+---
 
-<img width="1827" height="819" alt="Screenshot 2025-11-28 163651" src="https://github.com/user-attachments/assets/08307b4f-6045-4afe-bd00-ab5ac57a9477" />
+## Summary
 
+This project demonstrates:
 
-<img width="1440" height="270" alt="Screenshot 2025-11-28 150617" src="https://github.com/user-attachments/assets/d979649b-d971-4cb4-a3bb-00278ee3fa80" />
+- Dockerized MEAN stack  
+- Docker Compose orchestration  
+- MongoDB persistent storage  
+- Jenkins CI/CD pipeline  
+- Docker Hub integration  
+- Automated deployment to EC2  
+- Nginx reverse proxy  
 
-<img width="1145" height="285" alt="Screenshot 2025-11-27 232941" src="https://github.com/user-attachments/assets/72ac4576-4f21-40ca-b870-d99f7edea287" />
+## 📸 Screenshots
 
+### 1. Application UI
+![Application UI](https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9)
 
+---
 
-<img width="1639" height="592" alt="Screenshot 2025-11-27 232900" src="https://github.com/user-attachments/assets/87aa9843-46fe-4fbe-bd2a-e71c134527b1" />
+### 2. Docker Hub – Images Successfully Pushed
+![Docker Hub Images](https://github.com/user-attachments/assets/08307b4f-6045-4afe-bd00-ab5ac57a9477)
+
+---
+
+### 3. Jenkins Pipeline – Build Success
+![Jenkins Build](https://github.com/user-attachments/assets/d979649b-d971-4cb4-a3bb-00278ee3fa80)
+
+---
+
+### 4. EC2 Instance – Running Containers
+![EC2 Containers](https://github.com/user-attachments/assets/72ac4576-4f21-40ca-b870-d99f7edea287)
+
+---
+
 
 
 
