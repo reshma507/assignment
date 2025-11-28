@@ -366,27 +366,30 @@ This project demonstrates:
 
 ## 📸 Screenshots
 
-### 1. Application UI
+### 1. Docker Hub-Images successfully pushed
 ![Application UI](https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9)
 
 ---
 
-### 2. Docker Hub – Images Successfully Pushed
+### 2. Jenkins credentials required
 ![Docker Hub Images](https://github.com/user-attachments/assets/08307b4f-6045-4afe-bd00-ab5ac57a9477)
 
 ---
 
-### 3. Jenkins Pipeline – Build Success
+### 3. EC2 security group – Inbound rules settings
 ![Jenkins Build](https://github.com/user-attachments/assets/d979649b-d971-4cb4-a3bb-00278ee3fa80)
 
 ---
 
-### 4. EC2 Instance – Running Containers
+### 4. Testing Backend container - Backend running
 ![EC2 Containers](https://github.com/user-attachments/assets/72ac4576-4f21-40ca-b870-d99f7edea287)
 
 ---
 
+### 5. Testing Frontend container - Frontend running
+![EC2 Containers](https://github.com/user-attachments/assets/c04be741-426a-409f-9de2-fa8d166026ff)
 
+---
 
 
 
