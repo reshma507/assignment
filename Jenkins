@@ -3,19 +3,24 @@ pipeline {
 
     environment {
         DOCKERHUB_REPO = "reshma561"
-        IMAGE_TAG = "${env.GIT_COMMIT}" 
+        IMAGE_TAG = "${env.GIT_COMMIT}"
     }
 
     stages {
+
         stage('Build Backend Image') {
             steps {
-                sh 'docker build -t $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG backend/'
+                sh """
+                docker build -t ${DOCKERHUB_REPO}/assignment_backend:${IMAGE_TAG} backend/
+                """
             }
         }
 
         stage('Build Frontend Image') {
             steps {
-                sh 'docker build -t $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG frontend/'
+                sh """
+                docker build -t ${DOCKERHUB_REPO}/assignment_frontend:${IMAGE_TAG} frontend/
+                """
             }
         }
 
@@ -26,15 +31,19 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh """
+                    echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
+                    """
                 }
             }
         }
 
         stage('Push Images to Docker Hub') {
             steps {
-                sh 'docker push $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG'
-                sh 'docker push $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG'
+                sh """
+                docker push ${DOCKERHUB_REPO}/assignment_backend:${IMAGE_TAG}
+                docker push ${DOCKERHUB_REPO}/assignment_frontend:${IMAGE_TAG}
+                """
             }
         }
 
@@ -44,10 +53,16 @@ pipeline {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@54.175.60.36 << 'ENDSSH'
                         cd /home/ubuntu
-                        docker pull $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG
-                        docker pull $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG
+
+                        # Pull latest images
+                        docker pull ${DOCKERHUB_REPO}/assignment_backend:${IMAGE_TAG}
+                        docker pull ${DOCKERHUB_REPO}/assignment_frontend:${IMAGE_TAG}
+
+                        # Restart docker-compose stack
                         docker-compose down
                         docker-compose up -d --build
+
+                        # Cleanup unused images
                         docker system prune -f
                     ENDSSH
                     """
