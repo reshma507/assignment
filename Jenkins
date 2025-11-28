@@ -9,13 +9,13 @@ pipeline {
     stages {
         stage('Build Backend Image') {
             steps {
-                sh 'docker build -t $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG backend/'
+                sh 'sudo docker build -t $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG backend/'
             }
         }
 
         stage('Build Frontend Image') {
             steps {
-                sh 'docker build -t $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG frontend/'
+                sh 'sudo docker build -t $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG frontend/'
             }
         }
 
@@ -26,15 +26,15 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'echo $DOCKER_PASS | sudo docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
 
         stage('Push Images to Docker Hub') {
             steps {
-                sh 'docker push $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG'
-                sh 'docker push $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG'
+                sh 'sudo docker push $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG'
+                sh 'sudo docker push $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG'
             }
         }
 
