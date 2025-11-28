@@ -47,27 +47,25 @@ pipeline {
             }
         }
 
-        stage('Deploy on EC2') {
-            steps {
-                sshagent(['ec2-ssh']) {
-                    sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@54.175.60.36 << 'ENDSSH'
-                        cd /home/ubuntu
+       stage('Deploy on EC2') {
+    steps {
+        sshagent(['ec2-ssh']) {
+            sh """
+            ssh -o StrictHostKeyChecking=no ubuntu@54.175.60.36 << 'ENDSSH'
+                cd /home/ubuntu/assignment
 
-                        # Pull latest images
-                        docker pull ${DOCKERHUB_REPO}/assignment_backend:${IMAGE_TAG}
-                        docker pull ${DOCKERHUB_REPO}/assignment_frontend:${IMAGE_TAG}
+                # Pull latest images
+                docker pull ${DOCKERHUB_REPO}/assignment_backend:${IMAGE_TAG}
+                docker pull ${DOCKERHUB_REPO}/assignment_frontend:${IMAGE_TAG}
 
-                        # Restart docker-compose stack
-                        docker-compose down
-                        docker-compose up -d --build
+                # Restart docker-compose stack
+                docker-compose down
+                docker-compose up -d --build
 
-                        # Cleanup unused images
-                        docker system prune -f
-                    ENDSSH
-                    """
-                }
-            }
+                # Cleanup unused images
+                docker system prune -f
+            ENDSSH
+            """
         }
     }
 }
