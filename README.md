@@ -366,6 +366,21 @@ This project demonstrates:
 
 ## 📸 Screenshots
 
+### 1. Docker compose excution in ec2
+![Application UI](https://github.com/user-attachments/assets/f54f4cc2-bc3e-481f-a5d0-5af6ab8a0200)
+![Application UI](https://github.com/user-attachments/assets/75a1f04c-f929-4220-ac9a-5f966ef13fa0)
+
+---
+### 1. Docker containers up and running
+![Application UI](https://github.com/user-attachments/assets/6d275aee-57bd-45d2-a25d-50777f537c3d)
+
+---
+### 1. Docker images created
+![Application UI](https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9)
+
+---
+
+
 ### 1. Docker Hub-Images successfully pushed
 ![Application UI](https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9)
 
@@ -390,8 +405,12 @@ This project demonstrates:
 ![EC2 Containers](https://github.com/user-attachments/assets/c04be741-426a-409f-9de2-fa8d166026ff)
 
 ---
+<img width="1714" height="184" alt="Screenshot 2025-11-28 232118" src="https://github.com/user-attachments/assets/6d275aee-57bd-45d2-a25d-50777f537c3d" />
 
+<img width="1070" height="632" alt="Screenshot 2025-11-28 232058" src="https://github.com/user-attachments/assets/f54f4cc2-bc3e-481f-a5d0-5af6ab8a0200" />
+<img width="1012" height="592" alt="Screenshot 2025-11-28 232026" src="https://github.com/user-attachments/assets/75a1f04c-f929-4220-ac9a-5f966ef13fa0" />
 
+<img width="934" height="620" alt="Screenshot 2025-11-28 232036" src="https://github.com/user-attachments/assets/ca44f916-92a4-4848-adce-b5ba18911080" />
 
 
 
