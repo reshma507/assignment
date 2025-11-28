@@ -253,5 +253,6 @@ Jenkins (external server)
 Access the application using:
 
 http://EC2-PUBLIC-IP
+<img width="1919" height="1079" alt="Screenshot 2025-11-28 171125" src="https://github.com/user-attachments/assets/6d4a5153-9764-4283-8943-e10995d418c9" />
 
 
