@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_REPO = "reshma561"
-        IMAGE_TAG = "${env.GIT_COMMIT}"  // Tag images with the current Git commit hash
+        IMAGE_TAG = "${env.GIT_COMMIT}" // Tag images with the current Git commit hash
     }
 
     stages {
@@ -21,4 +21,44 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker]()
+                withCredentials([usernamePassword(
+                    credentialsId: 'docker-hub',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                }
+            }
+        }
+
+        stage('Push Images to Docker Hub') {
+            steps {
+                sh 'docker push $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG'
+                sh 'docker push $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG'
+            }
+        }
+
+        stage('Deploy on EC2') {
+            steps {
+                sshagent(['ec2-ssh']) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ubuntu@54.175.60.36 << 'ENDSSH'
+                        cd /home/ubuntu
+
+                        # Pull latest images
+                        sudo docker pull $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG
+                        sudo docker pull $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG
+
+                        # Restart containers
+                        sudo docker-compose down
+                        sudo docker-compose up -d --build
+
+                        # Cleanup old images
+                        sudo docker system prune -f
+                    ENDSSH
+                    """
+                }
+            }
+        }
+    }
+}
