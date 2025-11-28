@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_REPO = "reshma561"
+        IMAGE_TAG = "${env.GIT_COMMIT}"  // Tag images with the current Git commit hash
+    }
+
+    stages {
+        stage('Build Backend Image') {
+            steps {
+                sh 'docker build -t $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG backend/'
+            }
+        }
+
+        stage('Build Frontend Image') {
+            steps {
+                sh 'docker build -t $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG frontend/'
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker]()
