@@ -257,8 +257,6 @@ http://EC2-PUBLIC-IP
 
 
 
-<img width="1709" height="807" alt="Screenshot 2025-11-28 165344" src="https://github.com/user-attachments/assets/af6985b9-a7a4-4e1e-8757-6fde802f51c4" />
-
 
 
 <img width="1827" height="819" alt="Screenshot 2025-11-28 163651" src="https://github.com/user-attachments/assets/08307b4f-6045-4afe-bd00-ab5ac57a9477" />
