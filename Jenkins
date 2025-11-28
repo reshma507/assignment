@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_REPO = "reshma561"
-        IMAGE_TAG = "${env.GIT_COMMIT}" // Tag images with the current Git commit hash
+        IMAGE_TAG = "${env.GIT_COMMIT}" 
     }
 
     stages {
@@ -44,16 +44,10 @@ pipeline {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@54.175.60.36 << 'ENDSSH'
                         cd /home/ubuntu
-
-                        # Pull latest images
                         docker pull $DOCKERHUB_REPO/assignment_backend:$IMAGE_TAG
                         docker pull $DOCKERHUB_REPO/assignment_frontend:$IMAGE_TAG
-
-                        # Restart containers
                         docker-compose down
                         docker-compose up -d --build
-
-                        # Cleanup old images
                         docker system prune -f
                     ENDSSH
                     """
